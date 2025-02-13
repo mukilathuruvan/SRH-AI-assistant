@@ -2,4 +2,6 @@ flask
 flask-SQLAlchemy
 flask-cors
 flask_sqlalchemy
-dotenv
+python-dotenv
+requests
+mysql-connector-python

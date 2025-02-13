@@ -1,16 +1,18 @@
 "use client";
 
 import { useMessages } from "@/providers/MessageContextProvider";
+import Bubble from "./Bubble";
 
-const MessagesList = ({ className = "" }) => {
-  const { messages, isLoadingAnswer } = useMessages();
+const MessagesList = ({ model = "gpt", className = "" }) => {
+  const { geminiMessages, gptMessages, isLoadingAnswer } = useMessages();
+
+  const messages = model === "gpt" ? gptMessages : geminiMessages;
 
   return (
-    <div className={`flex flex-col gap-2 ${className} p-8`}>
+    <div className={`flex flex-col gap-2 ${className} p-8 mb-28`}>
       {messages?.map((message, i) => {
         const isUser = message.role === "user";
         if (message.role === "system") return null;
-
         return (
           <div
             id={`message-${i}`}
@@ -19,29 +21,22 @@ const MessagesList = ({ className = "" }) => {
             } ${i === 1 ? "max-w-md" : ""}`}
             key={message.content}
           >
-            {!isUser && (
-              <img
-                src="https://www.teamsmart.ai/next-assets/team/ai.jpg"
-                className="h-9 w-9 rounded-full"
-                alt="avatar"
-              />
-            )}
-            <div
-              style={{ maxWidth: "calc(100% - 45px)" }}
-              className={`group relative rounded-lg px-3 py-2 ${
-                isUser
-                  ? "from-primary-700 to-primary-600 mr-2 bg-gradient-to-br text-white"
-                  : "ml-2 bg-gray-200 text-gray-700 dark:bg-gray-800 dark:text-gray-200"
-              }`}
-            >
-              {message.content.trim()}
-            </div>
-            {isUser && (
-              <img
-                src="https://www.teamsmart.ai/next-assets/profile-image.png"
-                className="h-9 w-9 cursor-pointer rounded-full"
-                alt="avatar"
-              />
+            {isUser ? (
+              <>
+                <div
+                  style={{ maxWidth: "calc(100% - 45px)" }}
+                  className={`group relative rounded-lg px-3 py-2 bg-orange-600 mr-2 text-gray-50`}
+                >
+                  {message.content.trim()}
+                </div>
+                <img
+                  src="https://www.teamsmart.ai/next-assets/team/ai.jpg"
+                  className="h-9 w-9 rounded-full"
+                  alt="avatar"
+                />
+              </>
+            ) : (
+              <Bubble message={message} model={model} />
             )}
           </div>
         );

@@ -9,7 +9,7 @@ const LayoutProvider = () => (
       SRH-AI-ASSISTANT{" "}
     </h1>
     <div className="grid grid-cols-2 flex-1">
-      <MessagesList className="border-r-2 bg-gray-50" />
+      <MessagesList className="border-r-2 bg-gray-50" model="gemini" />
       <MessagesList className="border-l-2 bg-gray-50" />
     </div>
     <MessageForm />
