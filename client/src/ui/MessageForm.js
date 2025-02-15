@@ -6,7 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 
 const MessageForm = () => {
-  const [content, setContent] = useState("");
+  const [content, setContent] = useState("what is life");
   const { addMessage } = useMessages();
 
   const handleSubmit = async (e) => {

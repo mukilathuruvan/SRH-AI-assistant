@@ -1,7 +1,8 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from dotenv import load_dotenv
-from AI.open_router import AI
+from models.gemini import AppGemini
+from models.chatgpt import AppChatGPT
 
 app = Flask(__name__)
 CORS(app)
@@ -14,30 +15,33 @@ def home():
     return "SRH AI Assitance API"
 
 
-@app.route("/api/ask", methods=["POST"])
+@app.route("/api/chat", methods=["POST"])
 def ask_ai():
     try:
         data = request.json
-        query = data.get("query")
+        prompt = data.get("prompt")
 
-        if not query:
-            return jsonify({"error": "Query parameter is required"}), 400
+        if not prompt:
+            return jsonify({"error": "Prompt parameter is required"}), 400
 
-        agent = AI()
-        gemini_response = agent.ask_gemini(query)
-        gpt_response = agent.ask_gpt(query)
+        app_gemini = AppGemini()
+        gemini_response = app_gemini.generate_response(prompt)
 
-        # formatted_text = agent_response.replace("\n", "\n\n")  # Adds extra line breaks
+        app_chatgpt = AppChatGPT()
+        gpt_response = app_chatgpt.generate_response(prompt)
 
-        response = {
-            "gemini_response": gemini_response,
-            "gpt_response": gpt_response,
-        }
+        if gpt_response and gemini_response:
+            return (
+                jsonify(
+                    {
+                        "gemini": gemini_response,
+                        "openai": gpt_response,
+                    }
+                ),
+                200,
+            )
 
-        if gemini_response and gpt_response:
-            return jsonify(response), 200
-
-        return jsonify({"error": "No answer found"}), 404
+        return jsonify({"response": "I couldn't understand you query"}), 401
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500

@@ -2,12 +2,12 @@ const API_URL = "http://localhost:8080/api";
 
 export const chatWithBot = async (message) => {
   try {
-    const response = await fetch(`${API_URL}/ask`, {
+    const response = await fetch(`${API_URL}/chat`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ query: message }),
+      body: JSON.stringify({ prompt: message }),
     });
 
     const data = await response.json();

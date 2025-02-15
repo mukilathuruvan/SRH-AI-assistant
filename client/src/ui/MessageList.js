@@ -19,7 +19,7 @@ const MessagesList = ({ model = "gpt", className = "" }) => {
             className={`fade-up mb-4 flex ${
               isUser ? "justify-end" : "justify-start"
             } ${i === 1 ? "max-w-md" : ""}`}
-            key={message.content}
+            key={message.content + i}
           >
             {isUser ? (
               <>

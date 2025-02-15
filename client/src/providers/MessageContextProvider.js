@@ -36,19 +36,19 @@ export function MessagesProvider({ children }) {
       setGptMessages([...gptMessages, userContent]);
       setGeminiMessages([...geminiMessages, userContent]);
 
-      const { gemini_response = null, gpt_response = null } = await chatWithBot(
+      const { gemini = null, openai = null } = await chatWithBot(
         userContent.content
       );
-      if (!gemini_response && !gpt_response) return;
+      if (!gemini && !openai) return;
 
       setGeminiMessages((messages) => [
         ...messages,
-        { ...gemini_response, role: "assistant" },
+        { ...gemini, role: "assistant" },
       ]);
 
       setGptMessages((messages) => [
         ...messages,
-        { ...gpt_response, role: "assistant" },
+        { ...openai, role: "assistant" },
       ]);
     } catch (error) {
       console.error(error);
@@ -67,8 +67,10 @@ export function MessagesProvider({ children }) {
 }
 
 export const useMessages = () => {
-  if (useContext(ChatsContext) === undefined) {
+  const context = useContext(ChatsContext);
+
+  if (context === undefined) {
     throw new Error("useMessages must be used within a MessagesProvider");
   }
-  return useContext(ChatsContext);
+  return context;
 };
