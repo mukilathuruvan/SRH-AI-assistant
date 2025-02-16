@@ -53,9 +53,6 @@ class AppChatGPT:
         end_time = time.time()
         response_time = round(end_time - start_time, 2)
 
-        print(f"Response Time: {response_time} seconds")
-        print(completion.choices[0].message.content)
-
         return {
             "content": completion.choices[0].message.content,
             "response_time": response_time,

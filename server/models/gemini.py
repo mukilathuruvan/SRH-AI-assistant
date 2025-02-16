@@ -169,8 +169,8 @@ class AppGemini:
             if not self.model:
                 self.initialize()
 
-            # if not self.validate_prompt(prompt):
-            #     return None
+            if not self.validate_prompt(prompt):
+                return None
 
             start_time = time.time()
             chat = self.model.start_chat()

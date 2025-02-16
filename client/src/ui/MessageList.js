@@ -9,7 +9,7 @@ const MessagesList = ({ model = "gpt", className = "" }) => {
   const messages = model === "gpt" ? gptMessages : geminiMessages;
 
   return (
-    <div className={`flex flex-col gap-2 ${className} p-8 mb-28`}>
+    <div className={`flex flex-col justify-end gap-2 ${className} p-8 mb-28`}>
       {messages?.map((message, i) => {
         const isUser = message.role === "user";
         if (message.role === "system") return null;
@@ -27,7 +27,7 @@ const MessagesList = ({ model = "gpt", className = "" }) => {
                   style={{ maxWidth: "calc(100% - 45px)" }}
                   className={`group relative rounded-lg px-3 py-2 bg-orange-600 mr-2 text-gray-50`}
                 >
-                  {message.content.trim()}
+                  {message.content?.trim() ?? ""}
                 </div>
                 <img
                   src="https://www.teamsmart.ai/next-assets/team/ai.jpg"

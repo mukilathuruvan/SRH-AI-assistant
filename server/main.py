@@ -18,8 +18,8 @@ def home():
 @app.route("/api/chat", methods=["POST"])
 def ask_ai():
     try:
-        data = request.json
-        prompt = data.get("prompt")
+        form = request.form
+        prompt = form.get("prompt")
 
         if not prompt:
             return jsonify({"error": "Prompt parameter is required"}), 400

@@ -12,7 +12,7 @@ const Bubble = ({ message, model }) => {
     <div className="flex gap-2">
       <span
         className={`h-9 min-w-10 cursor-pointer rounded-full uppercase text-center text-xs bg-gray-200  grid place-content-center ${
-          model === "gpt" ? "bg-blue-800 text-white" : "bg-gray-500 text-white"
+          model === "gpt" ? "bg-blue-800 text-white" : "bg-gray-800 text-white"
         }`}
       >
         {model == "gpt" ? "C" : "G"}
@@ -20,8 +20,8 @@ const Bubble = ({ message, model }) => {
 
       <div className="grid">
         {message.response_time && message.role === "assistant" && (
-          <span className="text-green-700">
-            Response time: {message.response_time}seconds
+          <span className="text-green-700 text-sm">
+            Response time: {message.response_time}s
           </span>
         )}
 

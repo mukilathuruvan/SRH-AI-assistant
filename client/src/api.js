@@ -1,13 +1,10 @@
 const API_URL = "http://localhost:8080/api";
 
-export const chatWithBot = async (message) => {
+export const chatWithBot = async (formData) => {
   try {
     const response = await fetch(`${API_URL}/chat`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ prompt: message }),
+      body: formData,
     });
 
     const data = await response.json();

@@ -30,15 +30,13 @@ export function MessagesProvider({ children }) {
     }
   }, [gptMessages?.length, geminiMessages?.length, setGptMessages]);
 
-  const addMessage = async (userContent) => {
+  const addMessage = async (userContent, formData) => {
     setIsLoadingAnswer(true);
     try {
       setGptMessages([...gptMessages, userContent]);
       setGeminiMessages([...geminiMessages, userContent]);
 
-      const { gemini = null, openai = null } = await chatWithBot(
-        userContent.content
-      );
+      const { gemini = null, openai = null } = await chatWithBot(formData);
       if (!gemini && !openai) return;
 
       setGeminiMessages((messages) => [
